@@ -1,20 +1,9 @@
-"use client"
-
 import dynamic from 'next/dynamic';
 import MapInfoPanel from "@/components/MarkInfo";
 import StatsOverview from "@/components/StatsOverview";
 import RecentActivity from "@/components/RecentActivity";
 import QuickActions from "@/components/QuickActions";
 import MapWrapper from '../../components/map/MapWrapper'
-
-const Map = dynamic(() => import("../../components/map/Map"), {
-  ssr: false,
-  loading: () => (
-    <div className="flex items-center justify-center h-full bg-gray-100">
-      <div className="text-gray-500">Loading map...</div>
-    </div>
-  )
-});
 
 export default function MapPage() {
   return (
