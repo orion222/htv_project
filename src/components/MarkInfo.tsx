@@ -14,7 +14,13 @@ import {
 } from "@/components/ui/select"
 
 export default function MapInfoPanel() {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(() => {
+    const phoneWidth = 870;
+    if (typeof window !== "undefined") {
+      return window.innerWidth >= phoneWidth;
+    }
+    return false;
+  });
   const [state, setState] = useState("Mark Info")
   const [filters, setFilters] = useState({
     date: "",
