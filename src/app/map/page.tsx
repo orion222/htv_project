@@ -7,7 +7,7 @@ import MapWrapper from '../../components/map/MapWrapper'
 import { useEffect, useState } from 'react'
 import { MarkersProvider, useMarkers } from '../../contexts/MarkersContext'
 
-export function MapPage() {
+export function MapPage({ setActiveMarker }) {
     const { markers, setMarkers } = useMarkers()
     const [mounted, setMounted] = useState(false)
   
