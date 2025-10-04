@@ -43,16 +43,36 @@ function LocationMarker() {
 
 export default function Map({ className }: MapProps) {
   const [mounted, setMounted] = useState(false)
-  const [markers, setMarkers] = useState<MarkerData[]>([
-    { id: 1, position: [51.505, -0.09], animal: "squirrel", report_time: "Oct 4, 2025", status: "CLEANED"},
-    { id: 2, position: [48.8566, 2.3522], animal: "squirrel", report_time: "Oct 4, 2025", status: "CLEANED"},
-    { id: 3, position: [52.5200, 13.4050], animal: "squirrel", report_time: "Oct 4, 2025", status: "CLEANED"},
-  ])
+  const [markers, setMarkers] = useState<MarkerData[]>([])
 
-  useEffect(() => {
-    setMounted(true)
+    useEffect(() => {
+      const fetchMarkers = async () => {
+        try {
+          const response = await fetch("http://localhost:8000/marker", {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+          }
+          
+          const data = await response.json()
+          setMarkers(data?.markers)
+        } catch (error) {
+          console.error('Error fetching markers:', error)
+          // Set empty array as fallback
+          setMarkers([])
+        } finally {
+          setMounted(true)
+        }
+      }
+
+      fetchMarkers()
   }, [])
-
+  
   if (!mounted) {
     return (
       <div className={`flex items-center justify-center bg-gray-100 ${className || 'h-96 w-full'}`}>
@@ -70,9 +90,10 @@ export default function Map({ className }: MapProps) {
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        url='https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png'
       />
-      {markers.map((marker) => (
+      {
+      markers.map((marker) => (
         <Marker key={marker.id} position={marker.position}>
           <Popup>
             <PopupDetail data={marker}/>

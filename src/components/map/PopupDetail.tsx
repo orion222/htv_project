@@ -28,7 +28,7 @@ export default function PopupDetail({ data }: PopupDetailProps) {
 
       <div className="flex flex-col">
         <span className="text-sm font-semibold text-gray-700">Report Time</span>
-        <span className="text-sm text-gray-900">{data.report_time}</span>
+        <span className="text-sm text-gray-900">{data.timestamp}</span>
       </div>
 
       <div className="flex flex-col">
