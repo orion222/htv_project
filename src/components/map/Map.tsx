@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
-import { MarkerData } from '../types'
+import { MarkerData } from '@types/Marker'
 import PopupDetail from './PopupDetail'
 
 // Fix for default markers in react-leaflet
@@ -23,7 +23,7 @@ interface MapProps {
 
 function LocationMarker() {
   const [position, setPosition] = useState<[number, number] | null>(null)
-  
+
   const map = useMapEvents({
     click() {
       map.locate()
@@ -65,8 +65,8 @@ export default function Map({ className }: MapProps) {
     <MapContainer
       center={[51.505, -0.09]}
       zoom={6}
-      className={className || 'h-96 w-full rounded-lg'}
-      style={{ height: '100%', width: '100%' }}
+      className={className || 'h-96 w-full left-0'}
+      style={{ height: '100%', width: '110%' }}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
