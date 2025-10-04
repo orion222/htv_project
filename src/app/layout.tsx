@@ -30,6 +30,11 @@ export default function RootLayout({
       >
         <Navbar/>
         {children}
+        <footer className="border-t border-border py-8 mt-12">
+        <div className="max-w-7xl mx-auto px-8">
+          <p className="text-muted-foreground text-sm text-center">© 2025 MyApp. All rights reserved.</p>
+        </div>
+        </footer>
       </body>
     </html>
   );

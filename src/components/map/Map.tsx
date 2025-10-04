@@ -1,6 +1,6 @@
 'use client'
 
-import { useContext, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
@@ -44,7 +44,7 @@ function LocationMarker() {
 }
 
 export default function Map({ markers, center }: MapProps) {
-  const context = useMarkers();
+  const firstReport = useRef(null);
   return (
     <MapContainer
       center={center}
@@ -57,8 +57,13 @@ export default function Map({ markers, center }: MapProps) {
         url='https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png'
       />
       {
-      markers.map((marker) => (
-        <Marker key={marker.id} position={marker.position}>
+      markers.map((marker, idx) => (
+        <Marker key={marker.id} position={marker.position}
+            eventHandlers={{
+              add: (e) => {
+                if (idx === 0) e.target.openPopup(); // conditionally open
+              },
+            }}>
           <Popup>
             <PopupDetail data={marker}/>
           </Popup>
