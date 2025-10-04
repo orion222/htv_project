@@ -1,0 +1,89 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
+import 'leaflet/dist/leaflet.css'
+import L from 'leaflet'
+
+import Navbar from '../components/navbar/page'
+
+// Fix for default markers in react-leaflet
+delete (L.Icon.Default.prototype as any)._getIconUrl
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+})
+
+interface MarkerData {
+  id: number
+  position: [number, number]
+  popup: string
+}
+
+interface MapProps {
+  className?: string
+}
+
+function LocationMarker() {
+  const [position, setPosition] = useState<[number, number] | null>(null)
+  
+  const map = useMapEvents({
+    click() {
+      map.locate()
+    },
+    locationfound(e) {
+      setPosition([e.latlng.lat, e.latlng.lng])
+      map.flyTo(e.latlng, map.getZoom())
+    },
+  })
+
+  return position === null ? null : (
+    <Marker position={position}>
+      <Popup>You are here</Popup>
+    </Marker>
+  )
+}
+
+export default function Map({ className }: MapProps) {
+  const [mounted, setMounted] = useState(false)
+  const [markers, setMarkers] = useState<MarkerData[]>([
+    { id: 1, position: [51.505, -0.09], popup: "London, UK" },
+    { id: 2, position: [48.8566, 2.3522], popup: "Paris, France" },
+    { id: 3, position: [52.5200, 13.4050], popup: "Berlin, Germany" },
+  ])
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return (
+      <div className={`flex items-center justify-center bg-gray-100 ${className || 'h-96 w-full'}`}>
+        <div className="text-gray-500">Loading interactive map...</div>
+      </div>
+    )
+  }
+
+  return (
+    <MapContainer
+      center={[51.505, -0.09]}
+      zoom={6}
+      className={className || 'h-96 w-full rounded-lg'}
+      style={{ height: '100%', width: '100%' }}
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      {markers.map((marker) => (
+        <Marker key={marker.id} position={marker.position}>
+          <Popup>
+            {marker.popup}
+          </Popup>
+        </Marker>
+      ))}
+      <LocationMarker />
+    </MapContainer>
+  )
+}
