@@ -1,6 +1,7 @@
 "use client"
 
 import { MarkerData } from '../../types/Marker'
+import { Badge } from "@/components/ui/badge";
 
 interface PopupDetailProps {
   data: MarkerData
@@ -34,12 +35,10 @@ export default function PopupDetail({ data }: PopupDetailProps) {
 
       <div className="flex flex-col">
         <span className="text-sm font-semibold text-gray-700">Status</span>
-        <span className={`text-sm font-medium px-2 py-1 rounded-full text-center ${
-          data.status === 'CLEANED'
-            ? 'bg-green-100 text-green-800'
-            : 'bg-yellow-100 text-yellow-800'
-        }`}>
-          {data.status}
+        <span className={`text-sm font-medium py-1 rounded-full`}>
+          <Badge variant={data.status === "Resolved" ? "success" : (data.status === 'Pending' ? "warning": "secondary")}>
+            {data.status}
+          </Badge>
         </span>
       </div>
     </div>
