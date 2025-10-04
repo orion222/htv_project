@@ -1,14 +1,19 @@
+"use client"
 
+import Link from 'next/link';
 
 export default function Navbar() {
     return (
-        <nav className="bg-gray-800 p-4 text-white">
-            <div className="container mx-auto flex justify-between items-center">
-                <div className="text-lg font-bold">MyApp</div>
-                <div>
-                    <a href="#" className="px-3 py-2 hover:bg-gray-700 rounded">Home</a>
-                    <a href="#" className="px-3 py-2 hover:bg-gray-700 rounded">About</a>
-                    <a href="#" className="px-3 py-2 hover:bg-gray-700 rounded">Contact</a>
+        <nav className="px-8 py-4 border-b border-gray-300">
+            <div className="max-w-7xl mx-auto flex justify-between items-center">
+                <Link href="/" className="text-xl font-bold text-gray-900">MyApp</Link>
+                <div className="flex items-center gap-8">
+                    <Link href="/" className="text-gray-700 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-all">Home</Link>
+                    <Link href="/map" className="text-gray-700 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-all">Map</Link>
+                    <Link href="#" className="text-gray-700 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-all">API</Link>
+                </div>
+                <div className="flex items-center gap-4">
+                    <Link href="#" className="bg-teal-700 hover:bg-teal-800 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">Report</Link>
                 </div>
             </div>
         </nav>
