@@ -13,7 +13,7 @@ export default function RecentActivity() {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {markers.map((marker) => (
+          {markers.slice(0,5).map((marker) => (
             <div key={marker.id} className="flex items-center justify-between pb-4 border-b border-border last:border-0 last:pb-0">
               <div className="flex-1">
                 <p className="text-sm font-medium">{marker.title}</p>
