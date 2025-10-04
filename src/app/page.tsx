@@ -1,5 +1,3 @@
-import Image from "next/image";
-import Navbar from "./components/navbar/page";
 import { Map } from "./map";
 
 export default function App() {

@@ -45,71 +45,71 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --background: #EBEDE8;
+  --foreground: #073127;
+  --card: #FFFFFF;
+  --card-foreground: #073127;
+  --popover: #FFFFFF;
+  --popover-foreground: #073127;
+  --primary: #004838;
+  --primary-foreground: #EBEDE8;
+  --secondary: #333F3C;
+  --secondary-foreground: #EBEDE8;
+  --muted: #EBEDE8;
+  --muted-foreground: #073127;
+  --accent: #E2FB6C;
+  --accent-foreground: #073127;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --border: #333F3C;
+  --input: #333F3C;
+  --ring: #004838;
+  --chart-1: #004838;
+  --chart-2: #073127;
+  --chart-3: #333F3C;
+  --chart-4: #E2FB6C;
+  --chart-5: #EBEDE8;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #073127;
+  --sidebar-primary: #004838;
+  --sidebar-primary-foreground: #EBEDE8;
+  --sidebar-accent: #E2FB6C;
+  --sidebar-accent-foreground: #073127;
+  --sidebar-border: #333F3C;
+  --sidebar-ring: #004838;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --background: #073127;
+  --foreground: #EBEDE8;
+  --card: #004838;
+  --card-foreground: #EBEDE8;
+  --popover: #004838;
+  --popover-foreground: #EBEDE8;
+  --primary: #E2FB6C;
+  --primary-foreground: #073127;
+  --secondary: #333F3C;
+  --secondary-foreground: #EBEDE8;
+  --muted: #004838;
+  --muted-foreground: #EBEDE8;
+  --accent: #E2FB6C;
+  --accent-foreground: #073127;
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --border: #333F3C;
+  --input: #333F3C;
+  --ring: #E2FB6C;
+  --chart-1: #E2FB6C;
+  --chart-2: #EBEDE8;
+  --chart-3: #333F3C;
+  --chart-4: #004838;
+  --chart-5: #073127;
+  --sidebar: #004838;
+  --sidebar-foreground: #EBEDE8;
+  --sidebar-primary: #E2FB6C;
+  --sidebar-primary-foreground: #073127;
+  --sidebar-accent: #333F3C;
+  --sidebar-accent-foreground: #EBEDE8;
+  --sidebar-border: #333F3C;
+  --sidebar-ring: #E2FB6C;
 }
 
 @layer base {
@@ -117,6 +117,12 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-light;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-light;
+  }
+  strong, b {
+    @apply font-normal;
   }
 }
