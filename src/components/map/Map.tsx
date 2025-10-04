@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
 import { MarkerData } from '../../types/Marker'
+import { useMarkers } from '../../contexts/MarkersContext'
 import PopupDetail from './PopupDetail'
 
 // Fix for default markers in react-leaflet
@@ -43,8 +44,7 @@ function LocationMarker() {
 }
 
 export default function Map({ markers, center }: MapProps) {
-  console.log(markers)
-  console.log(center)
+  const context = useMarkers();
   return (
     <MapContainer
       center={center}
