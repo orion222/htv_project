@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
-
-import Navbar from '../components/navbar/page'
+import { MarkerData } from '../types'
+import PopupDetail from './PopupDetail'
 
 // Fix for default markers in react-leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl
@@ -15,11 +15,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 })
 
-interface MarkerData {
-  id: number
-  position: [number, number]
-  popup: string
-}
+
 
 interface MapProps {
   className?: string
@@ -48,9 +44,9 @@ function LocationMarker() {
 export default function Map({ className }: MapProps) {
   const [mounted, setMounted] = useState(false)
   const [markers, setMarkers] = useState<MarkerData[]>([
-    { id: 1, position: [51.505, -0.09], popup: "London, UK" },
-    { id: 2, position: [48.8566, 2.3522], popup: "Paris, France" },
-    { id: 3, position: [52.5200, 13.4050], popup: "Berlin, Germany" },
+    { id: 1, position: [51.505, -0.09], animal: "squirrel", report_time: "Oct 4, 2025", status: "CLEANED"},
+    { id: 2, position: [48.8566, 2.3522], animal: "squirrel", report_time: "Oct 4, 2025", status: "CLEANED"},
+    { id: 3, position: [52.5200, 13.4050], animal: "squirrel", report_time: "Oct 4, 2025", status: "CLEANED"},
   ])
 
   useEffect(() => {
@@ -79,7 +75,7 @@ export default function Map({ className }: MapProps) {
       {markers.map((marker) => (
         <Marker key={marker.id} position={marker.position}>
           <Popup>
-            {marker.popup}
+            <PopupDetail data={marker}/>
           </Popup>
         </Marker>
       ))}
