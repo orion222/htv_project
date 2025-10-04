@@ -49,7 +49,7 @@ export default function Map({ markers, center }: MapProps) {
     <MapContainer
       center={center}
       zoom={15}
-      className='h-96 w-full left-0'
+      className='h-96 w-full left-0 border-b border-t border-border shadow-medium'
       style={{ height: '100%', width: '120vw', marginLeft: '-10vw', zIndex: '30'}}
     >
       <TileLayer
