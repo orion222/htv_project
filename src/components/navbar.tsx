@@ -13,7 +13,7 @@ export default function Navbar() {
                     <Link href="#" className="text-gray-700 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-all">API</Link>
                 </div>
                 <div className="flex items-center gap-4">
-                    <Link href="#" className="bg-teal-700 hover:bg-teal-800 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">Report</Link>
+                    <Link href="/submit-report" className="bg-teal-700 hover:bg-teal-800 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">Report</Link>
                 </div>
             </div>
         </nav>

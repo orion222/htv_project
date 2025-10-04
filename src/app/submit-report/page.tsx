@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 interface ReportFormData {
-  animal: string,
+  issue_category: string,
   status: string,
   location: string,
   position: Number[]
@@ -22,7 +22,7 @@ interface ReportFormData {
 
 export default function SubmitReportPage() {
   const [formData, setFormData] = useState<ReportFormData>({
-    animal: '',
+    issue_category: '',
     status: '',
     location: '',
     position: []
@@ -55,7 +55,7 @@ export default function SubmitReportPage() {
         alert('Report submitted successfully!')
         // Reset form
         setFormData({
-          animal: '',
+          issue_category: '',
           status: '',
           location: '',
           position: []
@@ -75,29 +75,48 @@ export default function SubmitReportPage() {
     <div className="container mx-auto py-8 px-4 max-w-2xl">
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">Submit Animal Report</CardTitle>
+          <CardTitle className="text-2xl font-bold">Submit City Issue Report</CardTitle>
+          <CardDescription className="mt-2">
+            Help us maintain a safe, clean, and accessible city by reporting public issues you encounter.
+          </CardDescription>
           <CardDescription>
-            Help us keep track of wildlife in your area by submitting a detailed report.
+            Use this form to notify city staff about problems in your community — such as damaged roads, broken streetlights, flooding, graffiti, garbage, or safety hazards.
+          </CardDescription>
+          <CardDescription>
+            Your report will help city maintenance teams identify, prioritize, and resolve issues more efficiently.
+          </CardDescription>
+          <CardDescription>
+            Please include as much detail as possible about the location, type, and severity of the issue. You do not need to provide personal contact information to submit a report.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="animal">Animal Type *</Label>
+              <Label htmlFor="issue_category">Issue Category *</Label>
               <Select 
-                value={formData.animal} 
-                onValueChange={(value) => handleInputChange('animal', value)}
+                value={formData.issue_category} 
+                onValueChange={(value) => handleInputChange('issue_category', value)}
+                required
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select animal type" />
+                  <SelectValue placeholder="Select Issue Category" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="squirrel">Squirrel</SelectItem>
-                  <SelectItem value="raccoon">Raccoon</SelectItem>
-                  <SelectItem value="bird">Bird</SelectItem>
-                  <SelectItem value="cat">Cat</SelectItem>
-                  <SelectItem value="dog">Dog</SelectItem>
-                  <SelectItem value="deer">Deer</SelectItem>
+                  <SelectItem value="pothole">Pothole</SelectItem>
+                  <SelectItem value="streetlight">Streetlight Out</SelectItem>
+                  <SelectItem value="traffic_signal">Traffic Signal</SelectItem>
+                  <SelectItem value="accessibility">Sidewalk/Accessibility</SelectItem>
+                  <SelectItem value="snow_ice">Snow/Ice</SelectItem>
+                  <SelectItem value="garbage">Garbage/Litter</SelectItem>
+                  <SelectItem value="illegal_dumping">Illegal Dumping</SelectItem>
+                  <SelectItem value="vandalism">Graffiti/Vandalism</SelectItem>
+                  <SelectItem value="landscaping">Tree/Landscaping</SelectItem>
+                  <SelectItem value="water_leak">Water Leak</SelectItem>
+                  <SelectItem value="flooding">Flooding/Drainage</SelectItem>
+                  <SelectItem value="noise">Noise</SelectItem>
+                  <SelectItem value="parking_bylaw">Parking/Bylaw</SelectItem>
+                  <SelectItem value="wildlife">Animal/Dead Wildlife</SelectItem>
+                  <SelectItem value="construction">Construction/Worksite</SelectItem>
                   <SelectItem value="other">Other</SelectItem>
                 </SelectContent>
               </Select>
@@ -107,7 +126,7 @@ export default function SubmitReportPage() {
               <Label htmlFor="location">Location *</Label>
               <Input
                 id="location"
-                placeholder="Enter the location where you spotted the animal"
+                placeholder="Enter the location where you spotted the issue (Ex. address, intersection, landmark)..."
                 value={formData.location}
                 onChange={(e) => handleInputChange('location', e.target.value)}
                 required
@@ -119,7 +138,7 @@ export default function SubmitReportPage() {
               <Label htmlFor="description">Description *</Label>
               <Textarea
                 id="description"
-                placeholder="Provide details about the animal, its condition, behavior, or any concerns..."
+                placeholder="Provide details about the issue, its condition, behavior, or any concerns..."
                 value={formData.description}
                 onChange={(e) => handleInputChange('description', e.target.value)}
                 rows={4}
@@ -138,10 +157,10 @@ export default function SubmitReportPage() {
                   <SelectValue placeholder="Select urgency level" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="low">Low - General observation</SelectItem>
-                  <SelectItem value="medium">Medium - Requires attention</SelectItem>
-                  <SelectItem value="high">High - Immediate action needed</SelectItem>
-                  <SelectItem value="emergency">Emergency - Animal in distress</SelectItem>
+                  <SelectItem value="Low">Low - Minor issue (no immediate hazard)</SelectItem>
+                  <SelectItem value="Medium">Medium - Requires attention</SelectItem>
+                  <SelectItem value="High">High - Urgent or safety concern</SelectItem>
+                  <SelectItem value="Critical">Critical - Emergency / public danger</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -152,13 +171,12 @@ export default function SubmitReportPage() {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="reporterName">Your Name *</Label>
+                  <Label htmlFor="reporterName">Your Name</Label>
                   <Input
                     id="reporterName"
                     placeholder="Enter your full name"
                     value={formData.reporterName}
                     onChange={(e) => handleInputChange('reporterName', e.target.value)}
-                    required
                   />
                 </div>
 
@@ -175,14 +193,13 @@ export default function SubmitReportPage() {
               </div>
 
               <div className="space-y-2 mt-4">
-                <Label htmlFor="reporterEmail">Email Address *</Label>
+                <Label htmlFor="reporterEmail">Email Address</Label>
                 <Input
                   id="reporterEmail"
                   type="email"
                   placeholder="Enter your email address"
                   value={formData.reporterEmail}
                   onChange={(e) => handleInputChange('reporterEmail', e.target.value)}
-                  required
                 />
               </div>
             </div>

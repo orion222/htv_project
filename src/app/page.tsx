@@ -21,9 +21,11 @@ export default function HomePage() {
                   View Live Map
                 </Button>
               </Link>
+              <Link href="/submit-report">
               <Button size="lg" variant="outline" className="w-full sm:w-auto">
                 Submit a Report
               </Button>
+              </Link>
             </div>
           </div>
         </div>
