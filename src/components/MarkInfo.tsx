@@ -14,6 +14,13 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+type Address = {
+  street?: string | null;
+  city?: string | null;
+  state?: string | null;
+  zip?: string | number | null;
+};
+
 export default function MapInfoPanel() {
   const [isExpanded, setIsExpanded] = useState(() => {
     const phoneWidth = 870;
@@ -34,6 +41,17 @@ export default function MapInfoPanel() {
   const handleApplyFilters = () => {
     console.log("Applying filters:", filters);
     // TODO: Apply filters to map data
+  }
+
+  const addressConcat = (address?: Address | null, sep = ", ", fallback = "N/A"): string => {
+  if (!address || typeof address !== "object") return fallback;
+    const { street, city, state: region, zip } = address;
+
+    const parts = [street, city, region, zip]
+      .map(v => (v == null ? "" : String(v).trim()))
+      .filter(s => s.length > 0);
+
+    return parts.length ? parts.join(sep) : fallback;
   }
 
   return (
@@ -75,9 +93,31 @@ export default function MapInfoPanel() {
           <CardContent className="text-card-foreground overflow-y-auto h-[calc(100%-80px)]">
             {state === "Mark Info" ? (
               <>
-                <div>
-                  <Label>Description:</Label>
-                  {activeMarker?.description}
+                <div className="flex flex-col space-y-2">
+                  <div className='mb-4 flex flex-col'>
+                    <Label className="text-sm font-semibold text-gray-700">Description:</Label>
+                    <div className='text-sm text-gray-900'>{activeMarker?.description}</div>
+                  </div>
+
+                  <div className='mb-4 flex flex-col'>
+                    <Label className="text-sm font-semibold text-gray-700">Category:</Label>
+                    <div className='text-sm text-gray-900'>{activeMarker?.category}</div>
+                  </div>
+
+                  <div className='mb-4 flex flex-col'>
+                    <Label className="text-sm font-semibold text-gray-700">Urgency:</Label>
+                    <div className='text-sm text-gray-900'>{activeMarker?.urgency}</div>
+                  </div>
+
+                  <div className='mb-4 flex flex-col'>
+                    <Label className="text-sm font-semibold text-gray-700">Address:</Label>
+                    <div className='text-sm text-gray-900'>{addressConcat(activeMarker?.address)}</div>
+                  </div>
+
+                  <div className='mb-4 flex flex-col'>
+                    <Label className="text-sm font-semibold text-gray-700">Address ID:</Label>
+                    <div className='text-sm text-gray-900'>{activeMarker?.address_id}</div>
+                  </div>
                 </div>
               </>
             ):(
