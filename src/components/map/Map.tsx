@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
-import { MarkerData } from '@types/Marker'
+import { MarkerData } from '../../types/Marker'
 import PopupDetail from './PopupDetail'
 
 // Fix for default markers in react-leaflet
@@ -18,7 +18,8 @@ L.Icon.Default.mergeOptions({
 
 
 interface MapProps {
-  className?: string
+  markers: MarkerData[]
+  center: [number, number]
 }
 
 function LocationMarker() {
@@ -41,51 +42,20 @@ function LocationMarker() {
   )
 }
 
-export default function Map({ className }: MapProps) {
-  const [mounted, setMounted] = useState(false)
-  const [markers, setMarkers] = useState<MarkerData[]>([])
-
-    useEffect(() => {
-      const fetchMarkers = async () => {
-        try {
-          const response = await fetch("http://localhost:8000/marker", {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          })
-          
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`)
-          }
-          
-          const data = await response.json()
-          setMarkers(data?.markers)
-        } catch (error) {
-          console.error('Error fetching markers:', error)
-          // Set empty array as fallback
-          setMarkers([])
-        } finally {
-          setMounted(true)
-        }
-      }
-
-      fetchMarkers()
-  }, [])
-  
-  if (!mounted) {
-    return (
-      <div className={`flex items-center justify-center bg-gray-100 ${className || 'h-96 w-full'}`}>
-        <div className="text-gray-500">Loading interactive map...</div>
-      </div>
-    )
-  }
-
+export default function Map({ markers, center }: MapProps) {
+  console.log(markers)
+  console.log(center)
   return (
     <MapContainer
+<<<<<<< HEAD
       center={[51.505, -0.09]}
       zoom={6}
       className={`${className || 'h-96 w-full left-0'} z-0`}
+=======
+      center={center}
+      zoom={15}
+      className='h-96 w-full left-0'
+>>>>>>> 94c8d8ee0cdca7191c395803fcf6fc8adbef989e
       style={{ height: '100%', width: '120vw', marginLeft: '-10vw' }}
     >
       <TileLayer

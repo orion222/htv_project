@@ -5,6 +5,7 @@ import MapInfoPanel from "@/components/MarkInfo";
 import StatsOverview from "@/components/StatsOverview";
 import RecentActivity from "@/components/RecentActivity";
 import QuickActions from "@/components/QuickActions";
+import MapWrapper from '../../components/map/MapWrapper'
 
 const Map = dynamic(() => import("../../components/map/Map"), {
   ssr: false,
@@ -29,7 +30,7 @@ export default function MapPage() {
         </div>
 
         <div className="h-[500px] w-full relative">
-          <Map/>
+          <MapWrapper/>
           <MapInfoPanel />
         </div>
 
