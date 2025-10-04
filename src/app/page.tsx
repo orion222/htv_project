@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Navbar from "./app/components/navbar/page";
+import Navbar from "./components/navbar/page";
 
 export default function App() {
   return (
