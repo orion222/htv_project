@@ -42,7 +42,7 @@ export default function MapInfoPanel() {
     }`}>
       {isExpanded ? (
         <Card className="h-full bg-card rounded-3xl shadow-lg border-none">
-          <CardHeader className="pb-4">
+          <CardHeader className="">
             <div className="flex items-center justify-between">
               <CardTitle className="text-card-foreground flex gap-4 ">
                 {state === "Mark Info" ? (
@@ -59,6 +59,7 @@ export default function MapInfoPanel() {
                 )}
 
               </CardTitle>
+
               <Button
                 size="sm"
                 variant="ghost"
@@ -68,17 +69,20 @@ export default function MapInfoPanel() {
                 <h1 className="text-base">-</h1>
               </Button>
             </div>
+
           </CardHeader>
+          <div className="border-t border-border/30 mx-4"></div>
           <CardContent className="text-card-foreground overflow-y-auto h-[calc(100%-80px)]">
             {state === "Mark Info" ? (
               <>
                 <div>
+                  <Label>Description:</Label>
                   {activeMarker?.description}
                 </div>
               </>
             ):(
               <>
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
                   <div className='flex flex-col gap-2'>
                     <Label htmlFor="date">Date</Label>
                     <Input
