@@ -47,15 +47,9 @@ export default function Map({ markers, center }: MapProps) {
   console.log(center)
   return (
     <MapContainer
-<<<<<<< HEAD
-      center={[51.505, -0.09]}
-      zoom={6}
-      className={`${className || 'h-96 w-full left-0'} z-0`}
-=======
       center={center}
       zoom={15}
       className='h-96 w-full left-0'
->>>>>>> 94c8d8ee0cdca7191c395803fcf6fc8adbef989e
       style={{ height: '100%', width: '120vw', marginLeft: '-10vw' }}
     >
       <TileLayer
