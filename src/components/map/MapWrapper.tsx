@@ -1,7 +1,17 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { MarkerData } from '../../types/Marker'
-import Map from './Map'
+import dynamic from 'next/dynamic';
+
+const DynamicMap = dynamic(() => import('./Map'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center h-full bg-gray-100">
+      <div className="text-gray-500">Loading map...</div>
+    </div>
+  )
+});
+
 
 export default function MapWrapper() {
     const [mounted, setMounted] = useState(false)
@@ -19,7 +29,7 @@ export default function MapWrapper() {
               'Content-Type': 'application/json'
             }
           })
-          
+
           const data = await response.json()
           console.log(data);
           setMarkers(data?.markers)
@@ -33,7 +43,7 @@ export default function MapWrapper() {
 
       fetchMarkers()
     }, [])
-    
+
     if (!mounted) {
       return (
         <div className={`flex items-center justify-center bg-gray-100 'h-96 w-full'}`}>
@@ -43,6 +53,6 @@ export default function MapWrapper() {
     }
 
     return (
-      <Map markers={markers} center={setDefault ? utsc_position: center}/>
+      <DynamicMap markers={markers} center={setDefault ? utsc_position: center}/>
     )
 }
