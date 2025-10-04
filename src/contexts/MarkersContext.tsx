@@ -16,8 +16,21 @@ interface MarkersProviderProps {
 }
 
 export function MarkersProvider({ children }: MarkersProviderProps) {
+
+  const fakeActiveMarker: MarkerData = {
+    id: 0,
+    position: [0, 0] as [number, number],
+    description: '',
+    title: '',
+    urgency: '',
+    category: '',
+    status: '',
+    timestamp: '',
+    address_id: null,
+    address: {},
+  }
   const [markers, setMarkers] = useState<MarkerData[]>([])
-  const [activeMarker, setActiveMarker] = useState<MarkerData>(null)
+  const [activeMarker, setActiveMarker] = useState<MarkerData>(fakeActiveMarker)
 
   return (
     <MarkersContext.Provider value={{ markers, setMarkers, activeMarker, setActiveMarker }}>

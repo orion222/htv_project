@@ -5,6 +5,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from './ui/input';
+import { useMarkers } from '../contexts/MarkersContext'
 import {
   Select,
   SelectContent,
@@ -14,6 +15,7 @@ import {
 } from "@/components/ui/select"
 
 export default function MapInfoPanel() {
+  const { activeMarker } = useMarkers();
   const [isExpanded, setIsExpanded] = useState(true);
   const [state, setState] = useState("Mark Info")
   const [filters, setFilters] = useState({
@@ -64,6 +66,9 @@ export default function MapInfoPanel() {
           <CardContent className="text-card-foreground overflow-y-auto h-[calc(100%-80px)]">
             {state === "Mark Info" ? (
               <>
+                <div>
+                  {activeMarker?.description}
+                </div>
               </>
             ):(
               <>

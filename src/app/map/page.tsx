@@ -7,8 +7,8 @@ import MapWrapper from '../../components/map/MapWrapper'
 import { useEffect, useState } from 'react'
 import { MarkersProvider, useMarkers } from '../../contexts/MarkersContext'
 
-export function MapPage({ setActiveMarker }) {
-    const { markers, setMarkers } = useMarkers()
+export function MapPage() {
+    const { markers, setMarkers, setActiveMarker, activeMarker } = useMarkers()
     const [mounted, setMounted] = useState(false)
   
     useEffect(() => {
@@ -24,6 +24,7 @@ export function MapPage({ setActiveMarker }) {
           const data = await response.json()
           console.log(data);
           setMarkers(data?.markers || [])
+          setActiveMarker(data?.markers[0] ?? activeMarker)
         } catch (error) {
           console.error('Error fetching markers:', error)
           setMarkers([])
