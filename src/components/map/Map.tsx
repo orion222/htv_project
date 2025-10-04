@@ -20,6 +20,7 @@ L.Icon.Default.mergeOptions({
 interface MapProps {
   markers: MarkerData[]
   center: [number, number]
+  className: string
 }
 
 function LocationMarker() {
@@ -42,7 +43,7 @@ function LocationMarker() {
   )
 }
 
-export default function Map({ markers, center }: MapProps) {
+export default function Map({ markers, center, className }: MapProps) {
   console.log(markers)
   console.log(center)
   return (
@@ -50,7 +51,7 @@ export default function Map({ markers, center }: MapProps) {
       center={center}
       zoom={15}
       className='h-96 w-full left-0'
-      style={{ height: '100%', width: '120vw', marginLeft: '-10vw' }}
+      style={{ height: '100%', width: '120vw', marginLeft: '-10vw', zIndex: '30'}}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
