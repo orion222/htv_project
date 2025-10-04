@@ -1,7 +1,7 @@
 "use client"
 
 import dynamic from 'next/dynamic';
-import MapInfoPanel from "@/components/MapInfoPanel";
+import MapInfoPanel from "@/components/MarkInfo";
 import StatsOverview from "@/components/StatsOverview";
 import RecentActivity from "@/components/RecentActivity";
 import QuickActions from "@/components/QuickActions";

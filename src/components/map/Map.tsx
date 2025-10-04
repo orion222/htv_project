@@ -85,7 +85,7 @@ export default function Map({ className }: MapProps) {
     <MapContainer
       center={[51.505, -0.09]}
       zoom={6}
-      className={className || 'h-96 w-full left-0'}
+      className={`${className || 'h-96 w-full left-0'} z-0`}
       style={{ height: '100%', width: '120vw', marginLeft: '-10vw' }}
     >
       <TileLayer

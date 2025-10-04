@@ -25,6 +25,16 @@ import {
   MenubarSubContent,
   MenubarLabel,
 } from "@/components/ui/menubar"
+import { Input, Textarea } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Checkbox } from "@/components/ui/checkbox"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export default function ComponentsShowcase() {
   return (
@@ -350,6 +360,220 @@ export default function ComponentsShowcase() {
                 </div>
               </CardContent>
             </Card>
+          </div>
+        </section>
+
+        {/* Input Components */}
+        <section className="space-y-6">
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">Input Components</h2>
+            <Card>
+              <CardContent className="space-y-6">
+                {/* Text Input */}
+                <div className="space-y-3">
+                  <h3 className="text-lg font-medium">Text Input</h3>
+                  <div className="space-y-2">
+                    <Label htmlFor="basic-input">Basic Input</Label>
+                    <Input id="basic-input" placeholder="Enter text..." />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="disabled-input">Disabled Input</Label>
+                    <Input id="disabled-input" placeholder="Disabled" disabled />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="error-input">Input with Error</Label>
+                    <Input id="error-input" placeholder="Has error" error />
+                    <p className="text-xs text-destructive">This field has an error</p>
+                  </div>
+                </div>
+
+                {/* Different Input Types */}
+                <div className="space-y-3">
+                  <h3 className="text-lg font-medium">Input Types</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="email-input">Email</Label>
+                      <Input id="email-input" type="email" placeholder="email@example.com" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="password-input">Password</Label>
+                      <Input id="password-input" type="password" placeholder="••••••••" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="number-input">Number</Label>
+                      <Input id="number-input" type="number" placeholder="123" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="date-input">Date</Label>
+                      <Input id="date-input" type="date" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="time-input">Time</Label>
+                      <Input id="time-input" type="time" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="file-input">File</Label>
+                      <Input id="file-input" type="file" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Textarea */}
+                <div className="space-y-3">
+                  <h3 className="text-lg font-medium">Textarea</h3>
+                  <div className="space-y-2">
+                    <Label htmlFor="basic-textarea">Basic Textarea</Label>
+                    <Textarea id="basic-textarea" placeholder="Enter multiple lines of text..." />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="textarea-rows">Custom Rows</Label>
+                    <Textarea id="textarea-rows" rows={5} placeholder="5 rows high..." />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="error-textarea">Textarea with Error</Label>
+                    <Textarea id="error-textarea" placeholder="Has error" error />
+                    <p className="text-xs text-destructive">This field is required</p>
+                  </div>
+                </div>
+
+                {/* Checkbox */}
+                <div className="space-y-3">
+                  <h3 className="text-lg font-medium">Checkbox</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox id="terms" />
+                      <Label htmlFor="terms" className="cursor-pointer">
+                        Accept terms and conditions
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox id="marketing" defaultChecked />
+                      <Label htmlFor="marketing" className="cursor-pointer">
+                        Receive marketing emails
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox id="disabled-checkbox" disabled />
+                      <Label htmlFor="disabled-checkbox" className="opacity-50">
+                        Disabled checkbox
+                      </Label>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Select Dropdown */}
+                <div className="space-y-3">
+                  <h3 className="text-lg font-medium">Select Dropdown</h3>
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="country-select">Country</Label>
+                      <Select>
+                        <SelectTrigger id="country-select">
+                          <SelectValue placeholder="Select a country" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="us">United States</SelectItem>
+                          <SelectItem value="ca">Canada</SelectItem>
+                          <SelectItem value="uk">United Kingdom</SelectItem>
+                          <SelectItem value="au">Australia</SelectItem>
+                          <SelectItem value="de">Germany</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="theme-select">Theme</Label>
+                      <Select defaultValue="system">
+                        <SelectTrigger id="theme-select">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="light">Light</SelectItem>
+                          <SelectItem value="dark">Dark</SelectItem>
+                          <SelectItem value="system">System</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Form Example */}
+                <div className="space-y-3">
+                  <h3 className="text-lg font-medium">Complete Form Example</h3>
+                  <div className="space-y-4 p-4 border rounded-lg">
+                    <div className="space-y-2">
+                      <Label htmlFor="form-name">Name</Label>
+                      <Input id="form-name" placeholder="John Doe" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="form-email">Email</Label>
+                      <Input id="form-email" type="email" placeholder="john@example.com" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="form-role">Role</Label>
+                      <Select>
+                        <SelectTrigger id="form-role">
+                          <SelectValue placeholder="Select your role" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="developer">Developer</SelectItem>
+                          <SelectItem value="designer">Designer</SelectItem>
+                          <SelectItem value="manager">Manager</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="form-message">Message</Label>
+                      <Textarea id="form-message" placeholder="Your message here..." rows={4} />
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox id="form-terms" />
+                      <Label htmlFor="form-terms" className="text-sm cursor-pointer">
+                        I agree to the terms and conditions
+                      </Label>
+                    </div>
+                    <button className="w-full bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Code Example */}
+          <div className="bg-muted/30 rounded-lg p-6">
+            <h3 className="text-sm font-semibold mb-3">Code Example:</h3>
+            <pre className="text-xs overflow-x-auto">
+              <code>{`// Input
+<div className="space-y-2">
+  <Label htmlFor="example">Label</Label>
+  <Input id="example" placeholder="Placeholder..." />
+</div>
+
+// Textarea
+<div className="space-y-2">
+  <Label htmlFor="textarea">Textarea</Label>
+  <Textarea id="textarea" placeholder="Message..." />
+</div>
+
+// Checkbox
+<div className="flex items-center space-x-2">
+  <Checkbox id="terms" />
+  <Label htmlFor="terms">Accept terms</Label>
+</div>
+
+// Select
+<Select>
+  <SelectTrigger>
+    <SelectValue placeholder="Choose..." />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="option1">Option 1</SelectItem>
+    <SelectItem value="option2">Option 2</SelectItem>
+  </SelectContent>
+</Select>`}</code>
+            </pre>
           </div>
         </section>
 
