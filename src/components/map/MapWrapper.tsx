@@ -1,6 +1,6 @@
 'use client'
 import dynamic from 'next/dynamic';
-import { MarkersProvider, useMarkers } from '../../contexts/MarkersContext'
+import { useMarkers } from '../../contexts/MarkersContext'
 
 const DynamicMap = dynamic(() => import('./Map'), {
   ssr: false,
