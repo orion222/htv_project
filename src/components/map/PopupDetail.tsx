@@ -1,12 +1,13 @@
 "use client"
 
-import { MarkerData } from '@types/Marker'
+import { MarkerData } from '../../types/Marker'
 
 interface PopupDetailProps {
   data: MarkerData
 }
 
 export default function PopupDetail({ data }: PopupDetailProps) {
+  const timestamp = new Date(data.timestamp)
   return (
     <div className="flex flex-col space-y-2 p-2 min-w-[200px]">
       <div className="flex flex-col">
@@ -15,8 +16,8 @@ export default function PopupDetail({ data }: PopupDetailProps) {
       </div>
 
       <div className="flex flex-col">
-        <span className="text-sm font-semibold text-gray-700">Animal</span>
-        <span className="text-sm text-gray-900 capitalize">{data.animal}</span>
+        <span className="text-sm font-semibold text-gray-700">Title</span>
+        <span className="text-sm text-gray-900 capitalize">{data.title}</span>
       </div>
 
       <div className="flex flex-col">
@@ -28,7 +29,7 @@ export default function PopupDetail({ data }: PopupDetailProps) {
 
       <div className="flex flex-col">
         <span className="text-sm font-semibold text-gray-700">Report Time</span>
-        <span className="text-sm text-gray-900">{data.timestamp}</span>
+        <span className="text-sm text-gray-900">{timestamp.toLocaleString()}</span>
       </div>
 
       <div className="flex flex-col">

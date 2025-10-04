@@ -20,7 +20,6 @@ L.Icon.Default.mergeOptions({
 interface MapProps {
   markers: MarkerData[]
   center: [number, number]
-  className: string
 }
 
 function LocationMarker() {
@@ -43,7 +42,7 @@ function LocationMarker() {
   )
 }
 
-export default function Map({ markers, center, className }: MapProps) {
+export default function Map({ markers, center }: MapProps) {
   console.log(markers)
   console.log(center)
   return (

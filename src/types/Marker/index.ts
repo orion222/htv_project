@@ -1,7 +1,14 @@
+
+
 export interface MarkerData {
-  id: number
+  id: number;
   position: [number, number]
-  animal: string,
-  timestamp: string,
-  status: string,
+  description: string
+  title: string
+  urgency: string
+  category: string
+  status: string
+  timestamp: string
+  address_id: number | null
+  address: { [key: string]: any }
 }
