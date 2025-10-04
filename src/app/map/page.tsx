@@ -6,21 +6,22 @@ import QuickActions from "@/components/QuickActions";
 import MapWrapper from '../../components/map/MapWrapper'
 import { useEffect, useState } from 'react'
 import { MarkersProvider, useMarkers } from '../../contexts/MarkersContext'
+import { BACKEND_URL } from '../../lib/constants'
 
 export function MapPage() {
     const { markers, setMarkers, setActiveMarker, activeMarker } = useMarkers()
     const [mounted, setMounted] = useState(false)
-  
+
     useEffect(() => {
       const fetchMarkers = async () => {
         try {
-          const response = await fetch("http://localhost:8000/marker", {
+          const response = await fetch(`${BACKEND_URL}/marker`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json'
             }
           })
-  
+
           const data = await response.json()
           console.log(data);
           setMarkers(data?.markers || [])
