@@ -1,7 +1,7 @@
 
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -19,6 +19,152 @@ interface ReportFormData {
   reporterName?: string,
   reporterEmail?: string,
   contactNumber?: string,
+}
+
+function LocationAutocomplete({
+  value,
+  onChange,
+  onPick,
+  required,
+  limit = 7,
+  debounceMs = 250,
+  labelText = "Location *",
+  placeholder = "Enter an address, intersection, landmark…",
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  onPick: (label: string, coords: [number, number]) => void; // [lon, lat]
+  required?: boolean;
+  limit?: number;
+  debounceMs?: number;
+  labelText?: string;
+  placeholder?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [items, setItems] = useState<
+    { id: string | number; label: string; lon: number; lat: number }[]
+  >([]);
+  const [error, setError] = useState<string | null>(null);
+  const abortRef = useRef<AbortController | null>(null);
+
+  const apiKey = NEXT_PUBLIC_GEOAPIFY_API_KEY; // same source as your JSONViewer
+
+  // Build direct Geoapify /geocode/search URL (no country filter)
+  const url = useMemo(() => {
+    const q = value.trim();
+    setError(null);
+    if (!q || !apiKey) return "";
+    const params = new URLSearchParams({
+      text: q,
+      limit: String(limit),
+      apiKey,
+    });
+    return `https://api.geoapify.com/v1/geocode/search?${params.toString()}`;
+  }, [value, apiKey, limit]);
+
+  // Debounced fetch (same behavior style as your JSONViewer)
+  useEffect(() => {
+    if (!url) {
+      setItems([]);
+      setOpen(!!value.trim());
+      if (!apiKey && value.trim()) setError("Missing NEXT_PUBLIC_GEOAPIFY_API_KEY");
+      return;
+    }
+    setLoading(true);
+    setOpen(true);
+
+    const t = setTimeout(async () => {
+      try {
+        abortRef.current?.abort();
+        const ctrl = new AbortController();
+        abortRef.current = ctrl;
+
+        const res = await fetch(url, { signal: ctrl.signal });
+        if (!res.ok) {
+          const text = await res.text();
+          setError(`API error ${res.status}: ${text}`);
+          setItems([]);
+          return;
+        }
+        const data = await res.json();
+
+        const next =
+          (data?.features ?? []).map((f: any) => ({
+            id:
+              f?.properties?.place_id ??
+              `${f?.properties?.lat},${f?.properties?.lon}`,
+            label: f?.properties?.formatted ?? "",
+            lon: Number(f?.properties?.lon),
+            lat: Number(f?.properties?.lat),
+          })) ?? [];
+
+        setItems(next);
+        setError(null);
+      } catch (e: any) {
+        if (e?.name !== "AbortError") setError("Network error");
+        setItems([]);
+      } finally {
+        setLoading(false);
+      }
+    }, debounceMs);
+
+    return () => clearTimeout(t);
+  }, [url, debounceMs, value, apiKey]);
+
+  const pick = (it: { label: string; lon: number; lat: number }) => {
+    onPick(it.label, [it.lon, it.lat]); // keep your [lon, lat] shape
+    setOpen(false);
+  };
+
+  return (
+    <div className="space-y-2">
+      <Label htmlFor="location">{labelText}</Label>
+      <div className="relative">
+        <Input
+          id="location"
+          placeholder={placeholder}
+          value={value}
+          onChange={(e) => {
+            onChange(e.target.value);
+            if (!open) setOpen(true);
+          }}
+          onFocus={() => items.length && setOpen(true)}
+          onBlur={() => setTimeout(() => setOpen(false), 120)}
+          required={required}
+          autoComplete="off"
+        />
+
+        {open && (
+          <ul className="absolute z-50 mt-1 max-h-64 w-full overflow-auto rounded-md border bg-background p-1 shadow">
+            {loading && (
+              <li className="px-3 py-2 text-sm text-muted-foreground">Searching…</li>
+            )}
+            {!loading && error && (
+              <li className="px-3 py-2 text-sm text-red-600">{error}</li>
+            )}
+            {!loading && !error && items.length === 0 && value.trim() && (
+              <li className="px-3 py-2 text-sm text-muted-foreground">No results</li>
+            )}
+            {!loading &&
+              !error &&
+              items.map((it) => (
+                <li
+                  key={it.id}
+                  className="cursor-pointer rounded px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground"
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    pick(it);
+                  }}
+                >
+                  {it.label}
+                </li>
+              ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default function SubmitReportPage() {
@@ -100,16 +246,18 @@ export default function SubmitReportPage() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
 
-            <div className="space-y-2">
-              <Label htmlFor="location">Location *</Label>
-              <Input
-                id="location"
-                placeholder="Enter the location where you spotted the issue (Ex. address, intersection, landmark)..."
-                value={formData.location}
-                onChange={(e) => handleInputChange('location', e.target.value)}
-                required
-              />
-            </div>
+            <LocationAutocomplete
+              value={formData.location}
+              onChange={(val) => handleInputChange("location", val)}
+              onPick={(label, [lon, lat]) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  location: label,
+                  position: [lon, lat], // ✅ this now stores [lon, lat]
+                }))
+              }
+              required
+            />
 
             {/* Description */}
             <div className="space-y-2">
