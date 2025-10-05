@@ -68,9 +68,6 @@ export function MapPage() {
               <StatsOverview />
               <RecentActivity />
             </div>
-            <div>
-              <QuickActions />
-            </div>
           </div>
         </div>
       </main>
