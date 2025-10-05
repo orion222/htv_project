@@ -10,7 +10,7 @@ export default function Navbar() {
                     <img src="/batman.ico" alt="Batman Icon" className="w-6 h-6" />
                     City Watch
                 </Link>
-                <div className="flex items-center gap-8">
+                <div className="flex items-center md:gap-8 sm:gap-1">
                     <Link href="/" className="text-gray-700 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-all">Home</Link>
                     <Link href="/map" className="text-gray-700 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-all">Map</Link>
                     <Link href="/api" className="text-gray-700 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-all">API</Link>
