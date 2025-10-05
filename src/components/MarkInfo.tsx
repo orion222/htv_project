@@ -13,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { MarkerData } from "../types/Marker"
 
 type Address = {
   street?: string | null;
@@ -29,7 +30,7 @@ export default function MapInfoPanel() {
     }
     return false;
   });
-  const { activeMarker } = useMarkers();
+  const { allMarkers, activeMarker, setMarkers } = useMarkers();
   const [state, setState] = useState("Mark Info")
   const [filters, setFilters] = useState({
     date: "",
@@ -37,10 +38,48 @@ export default function MapInfoPanel() {
     status: "",
     urgency: ""
   })
-
   const handleApplyFilters = () => {
-    console.log("Applying filters:", filters);
-    // TODO: Apply filters to map data
+    let display: MarkerData[] = []
+    allMarkers.map((marker) => {
+      const matchCategory = !filters.category || marker?.category === filters.category
+      const matchStatus = !filters.status || marker?.status === filters.status
+      const matchUrgency = !filters.urgency || marker?.urgency === filters.urgency
+      
+      // Fix the date comparison
+      let matchDate = true;
+      if (filters.date) {
+        const filterDate = new Date(filters.date + 'T00:00:00'); // Force local timezone
+        const markerDate = new Date(marker.timestamp);
+        
+        // Compare just the date parts, ignoring time
+        matchDate = (
+          filterDate.getFullYear() === markerDate.getFullYear() &&
+          filterDate.getMonth() === markerDate.getMonth() &&
+          filterDate.getDate() === markerDate.getDate()
+        );
+      }
+      
+      const matchAll = (
+        matchCategory &&
+        matchStatus &&
+        matchUrgency &&
+        matchDate
+      )
+      if (matchAll) display.push(marker);
+    })
+    setMarkers(display)
+  }
+
+
+  const handleResetFilters = () => {
+    setFilters({
+      date: "",
+      category: "",
+      status: "",
+      urgency: ""
+    });
+    setMarkers(allMarkers);
+    // TODO: Reset map data to show all markers
   }
 
   const addressConcat = (address?: Address | null, sep = ", ", fallback = "N/A"): string => {
@@ -139,10 +178,10 @@ export default function MapInfoPanel() {
                           <SelectValue placeholder="Select a category" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="infrastructure">Infrastructure</SelectItem>
-                          <SelectItem value="environment">Environment</SelectItem>
-                          <SelectItem value="safety">Safety</SelectItem>
-                          <SelectItem value="health">Health</SelectItem>
+                          <SelectItem value="Crime">Crime</SelectItem>
+                          <SelectItem value="Infrastructure">Infrastructure</SelectItem>
+                          <SelectItem value="Environment">Environment</SelectItem>
+                          <SelectItem value="Safety">Safety</SelectItem>
                           <SelectItem value="other">Other</SelectItem>
                         </SelectContent>
                       </Select>
@@ -154,8 +193,9 @@ export default function MapInfoPanel() {
                           <SelectValue placeholder="Select status" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="pending">Pending</SelectItem>
-                          <SelectItem value="complete">Complete</SelectItem>
+                          <SelectItem value="Pending">Pending</SelectItem>
+                          <SelectItem value="In Progress">In progress</SelectItem>
+                          <SelectItem value="Resolved">Resolved</SelectItem>
                         </SelectContent>
                       </Select>
                   </div>
@@ -166,13 +206,25 @@ export default function MapInfoPanel() {
                           <SelectValue placeholder="Select urgency" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="high">High</SelectItem>
-                          <SelectItem value="medium">Medium</SelectItem>
-                          <SelectItem value="low">Low</SelectItem>
+                          <SelectItem value="Critical">Critical</SelectItem>
+                          <SelectItem value="High">High</SelectItem>
+                          <SelectItem value="Medium">Medium</SelectItem>
+                          <SelectItem value="Low">Low</SelectItem>
                         </SelectContent>
                       </Select>
                   </div>
-                  <Button className='mt-2' onClick={handleApplyFilters}>Apply Filters</Button>
+                  <div className="flex gap-2 mt-2">
+                    <Button onClick={handleApplyFilters} className="flex-1">
+                      Apply Filters
+                    </Button>
+                    <Button 
+                      onClick={handleResetFilters} 
+                      variant="outline" 
+                      className="flex-1"
+                    >
+                      Reset
+                    </Button>
+                  </div>
                 </div>
 
               </>

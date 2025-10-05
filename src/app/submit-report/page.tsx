@@ -9,12 +9,12 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import {NEXT_PUBLIC_GEOAPIFY_API_KEY} from '@/lib/constants'
+import { useRouter } from 'next/navigation'
 
 interface ReportFormData {
   issue_category: string,
   status: string,
   location: string,
-  position: number[]
   description?: string,
   reporterName?: string,
   reporterEmail?: string,
@@ -22,11 +22,11 @@ interface ReportFormData {
 }
 
 export default function SubmitReportPage() {
+  const router = useRouter()
   const [formData, setFormData] = useState<ReportFormData>({
     issue_category: '',
     status: '',
     location: '',
-    position: []
   })
   
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -42,24 +42,30 @@ export default function SubmitReportPage() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    try {
-      // TODO: Replace with your actual API endpoint
-      const response = await fetch('http://localhost:8000/marker', {
+    try {      
+      let gemini_arg = ''
+      for (const [k, v] of Object.entries(formData)) {
+        gemini_arg += `${k}: ${v}, `
+      }
+      
+      console.log({
+        'description': gemini_arg
+      })
+      const response = await fetch('http://localhost:8000/submit-report-gemini', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({'description': gemini_arg})
       })
-
-      if (response.ok) {
+      console.log(response);
+      if (response.status === 200) {
         alert('Report submitted successfully!')
         // Reset form
         setFormData({
           issue_category: '',
           status: '',
           location: '',
-          position: []
         })
       } else {
         alert('Error submitting report. Please try again.')
@@ -69,6 +75,7 @@ export default function SubmitReportPage() {
       alert('Error submitting report. Please try again.')
     } finally {
       setIsSubmitting(false)
+      router.push('/map')
     }
   }
 
@@ -92,7 +99,10 @@ export default function SubmitReportPage() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
+<<<<<<< HEAD
 
+=======
+>>>>>>> 798e3f11d4f0a11ab02a801174c92e364d98d2a2
             <div className="space-y-2">
               <Label htmlFor="location">Location *</Label>
               <Input

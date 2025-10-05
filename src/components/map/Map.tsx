@@ -45,6 +45,7 @@ function LocationMarker() {
 
 export default function Map({ markers, center }: MapProps) {
   const { setActiveMarker } = useMarkers();
+  console.log(markers);
   return (
     <MapContainer
       center={center}
