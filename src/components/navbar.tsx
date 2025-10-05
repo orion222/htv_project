@@ -6,7 +6,7 @@ export default function Navbar() {
     return (
         <nav className="sticky top-0 z-50 bg-card px-8 py-4 border-b border-border shadow-sm">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
-                <Link href="/" className="text-xl font-bold text-gray-900">MyApp</Link>
+                <Link href="/" className="text-xl font-bold text-gray-900">City Watch</Link>
                 <div className="flex items-center gap-8">
                     <Link href="/" className="text-gray-700 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-all">Home</Link>
                     <Link href="/map" className="text-gray-700 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-all">Map</Link>

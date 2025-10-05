@@ -13,7 +13,8 @@ const DynamicMap = dynamic(() => import('./Map'), {
 
 export default function MapWrapper() {
   const { markers } = useMarkers();
-  const default_position: [number, number] = markers[0].position
+
+  const default_position: [number, number] = markers.length ? markers[0].position: [0, 0]
   return (
     <DynamicMap markers={markers} center={default_position}/>
   )
