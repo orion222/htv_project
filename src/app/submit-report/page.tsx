@@ -10,9 +10,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import {NEXT_PUBLIC_GEOAPIFY_API_KEY} from '@/lib/constants'
 import { useRouter } from 'next/navigation'
+import { BACKEND_URL } from '../../lib/constants'
 
 interface ReportFormData {
-  issue_category: string,
   status: string,
   location: string,
   description?: string,
@@ -43,8 +43,18 @@ function LocationAutocomplete({
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState<
-    { id: string | number; label: string; lon: number; lat: number }[]
+    { 
+      id: string | number; 
+      label: string; 
+      lon: number; 
+      lat: number; 
+      country: string;
+      state: string;
+      street: string;
+      postcode: string | null;
+    }[]
   >([]);
+
   const [error, setError] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
 
@@ -97,6 +107,11 @@ function LocationAutocomplete({
             label: f?.properties?.formatted ?? "",
             lon: Number(f?.properties?.lon),
             lat: Number(f?.properties?.lat),
+            country: f?.properties?.country,
+            state: f?.properties?.state,
+            street: f?.properties?.street,
+            postalcode: f?.properties?.postcode,
+            city: f?.properties?.city
           })) ?? [];
 
         setItems(next);
@@ -170,7 +185,6 @@ function LocationAutocomplete({
 export default function SubmitReportPage() {
   const router = useRouter()
   const [formData, setFormData] = useState<ReportFormData>({
-    issue_category: '',
     status: '',
     location: '',
   })
@@ -187,7 +201,7 @@ export default function SubmitReportPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-
+  
     try {      
       let gemini_arg = ''
       for (const [k, v] of Object.entries(formData)) {
@@ -197,10 +211,11 @@ export default function SubmitReportPage() {
       console.log({
         'description': gemini_arg
       })
-      const response = await fetch('http://localhost:8000/submit-report-gemini', {
+      const response = await fetch(`${BACKEND_URL}/submit-report-gemini`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          "ngrok-skip-browser-warning": "true",
         },
         body: JSON.stringify({'description': gemini_arg})
       })
@@ -209,7 +224,6 @@ export default function SubmitReportPage() {
         alert('Report submitted successfully!')
         // Reset form
         setFormData({
-          issue_category: '',
           status: '',
           location: '',
         })

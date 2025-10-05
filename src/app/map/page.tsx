@@ -18,10 +18,11 @@ export function MapPage() {
           const response = await fetch(`${BACKEND_URL}/marker`, {
             method: 'GET',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              "ngrok-skip-browser-warning": "true",
             }
           })
-
+          console.log({response});
           const data = await response.json()
           setMarkers(data?.markers || [])
           setAllMarkers(data?.markers || []);
