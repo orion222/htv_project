@@ -43,6 +43,17 @@ export default function MapInfoPanel() {
     // TODO: Apply filters to map data
   }
 
+  const handleResetFilters = () => {
+    setFilters({
+      date: "",
+      category: "",
+      status: "",
+      urgency: ""
+    });
+    console.log("Filters reset");
+    // TODO: Reset map data to show all markers
+  }
+
   const addressConcat = (address?: Address | null, sep = ", ", fallback = "N/A"): string => {
   if (!address || typeof address !== "object") return fallback;
     const { street, city, state: region, zip } = address;
@@ -172,7 +183,18 @@ export default function MapInfoPanel() {
                         </SelectContent>
                       </Select>
                   </div>
-                  <Button className='mt-2' onClick={handleApplyFilters}>Apply Filters</Button>
+                  <div className="flex gap-2 mt-2">
+                    <Button onClick={handleApplyFilters} className="flex-1">
+                      Apply Filters
+                    </Button>
+                    <Button 
+                      onClick={handleResetFilters} 
+                      variant="outline" 
+                      className="flex-1"
+                    >
+                      Reset
+                    </Button>
+                  </div>
                 </div>
 
               </>
