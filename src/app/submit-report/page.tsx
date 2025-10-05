@@ -8,12 +8,13 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {NEXT_PUBLIC_GEOAPIFY_API_KEY} from '@/lib/constants'
 
 interface ReportFormData {
   issue_category: string,
   status: string,
   location: string,
-  position: Number[]
+  position: number[]
   description?: string,
   reporterName?: string,
   reporterEmail?: string,
@@ -91,36 +92,6 @@ export default function SubmitReportPage() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="issue_category">Issue Category *</Label>
-              <Select 
-                value={formData.issue_category} 
-                onValueChange={(value) => handleInputChange('issue_category', value)}
-                required
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select Issue Category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="pothole">Pothole</SelectItem>
-                  <SelectItem value="streetlight">Streetlight Out</SelectItem>
-                  <SelectItem value="traffic_signal">Traffic Signal</SelectItem>
-                  <SelectItem value="accessibility">Sidewalk/Accessibility</SelectItem>
-                  <SelectItem value="snow_ice">Snow/Ice</SelectItem>
-                  <SelectItem value="garbage">Garbage/Litter</SelectItem>
-                  <SelectItem value="illegal_dumping">Illegal Dumping</SelectItem>
-                  <SelectItem value="vandalism">Graffiti/Vandalism</SelectItem>
-                  <SelectItem value="landscaping">Tree/Landscaping</SelectItem>
-                  <SelectItem value="water_leak">Water Leak</SelectItem>
-                  <SelectItem value="flooding">Flooding/Drainage</SelectItem>
-                  <SelectItem value="noise">Noise</SelectItem>
-                  <SelectItem value="parking_bylaw">Parking/Bylaw</SelectItem>
-                  <SelectItem value="wildlife">Animal/Dead Wildlife</SelectItem>
-                  <SelectItem value="construction">Construction/Worksite</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
 
             <div className="space-y-2">
               <Label htmlFor="location">Location *</Label>
