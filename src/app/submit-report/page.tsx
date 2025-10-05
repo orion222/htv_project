@@ -8,12 +8,12 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { useRouter } from 'next/navigation'
 
 interface ReportFormData {
   issue_category: string,
   status: string,
   location: string,
-  position: Number[]
   description?: string,
   reporterName?: string,
   reporterEmail?: string,
@@ -21,11 +21,11 @@ interface ReportFormData {
 }
 
 export default function SubmitReportPage() {
+  const router = useRouter()
   const [formData, setFormData] = useState<ReportFormData>({
     issue_category: '',
     status: '',
     location: '',
-    position: []
   })
   
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -41,24 +41,30 @@ export default function SubmitReportPage() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    try {
-      // TODO: Replace with your actual API endpoint
-      const response = await fetch('http://localhost:8000/marker', {
+    try {      
+      let gemini_arg = ''
+      for (const [k, v] of Object.entries(formData)) {
+        gemini_arg += `${k}: ${v}, `
+      }
+      
+      console.log({
+        'description': gemini_arg
+      })
+      const response = await fetch('http://localhost:8000/submit-report-gemini', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({'description': gemini_arg})
       })
-
-      if (response.ok) {
+      console.log(response);
+      if (response.status === 200) {
         alert('Report submitted successfully!')
         // Reset form
         setFormData({
           issue_category: '',
           status: '',
           location: '',
-          position: []
         })
       } else {
         alert('Error submitting report. Please try again.')
@@ -68,6 +74,7 @@ export default function SubmitReportPage() {
       alert('Error submitting report. Please try again.')
     } finally {
       setIsSubmitting(false)
+      router.push('/map')
     }
   }
 
@@ -91,37 +98,6 @@ export default function SubmitReportPage() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="issue_category">Issue Category *</Label>
-              <Select 
-                value={formData.issue_category} 
-                onValueChange={(value) => handleInputChange('issue_category', value)}
-                required
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select Issue Category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="pothole">Pothole</SelectItem>
-                  <SelectItem value="streetlight">Streetlight Out</SelectItem>
-                  <SelectItem value="traffic_signal">Traffic Signal</SelectItem>
-                  <SelectItem value="accessibility">Sidewalk/Accessibility</SelectItem>
-                  <SelectItem value="snow_ice">Snow/Ice</SelectItem>
-                  <SelectItem value="garbage">Garbage/Litter</SelectItem>
-                  <SelectItem value="illegal_dumping">Illegal Dumping</SelectItem>
-                  <SelectItem value="vandalism">Graffiti/Vandalism</SelectItem>
-                  <SelectItem value="landscaping">Tree/Landscaping</SelectItem>
-                  <SelectItem value="water_leak">Water Leak</SelectItem>
-                  <SelectItem value="flooding">Flooding/Drainage</SelectItem>
-                  <SelectItem value="noise">Noise</SelectItem>
-                  <SelectItem value="parking_bylaw">Parking/Bylaw</SelectItem>
-                  <SelectItem value="wildlife">Animal/Dead Wildlife</SelectItem>
-                  <SelectItem value="construction">Construction/Worksite</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
             <div className="space-y-2">
               <Label htmlFor="location">Location *</Label>
               <Input
