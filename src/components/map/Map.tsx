@@ -45,7 +45,7 @@ function LocationMarker() {
 
 export default function Map({ markers, center }: MapProps) {
   const { setActiveMarker } = useMarkers();
-  console.log(markers);
+  console.log("hiihihih", markers);
   return (
     <MapContainer
       center={center}
@@ -58,25 +58,30 @@ export default function Map({ markers, center }: MapProps) {
         url='https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png'
       />
       {
-      markers.map((marker, idx) => (
-        <Marker 
-          key={marker.id} 
-          position={marker.position}
-          eventHandlers={{
-            click: (e) => {
-              setActiveMarker(marker);
-              console.log('Marker clicked:', marker);
-            },
-            add: (e) => {
-              if (idx === 0) e.target.openPopup(); // conditionally open
-            },
-          }}
-        >
-          <Popup>
-            <PopupDetail data={marker}/>
-          </Popup>
-        </Marker>
-      ))}
+      markers.map(function(marker, idx) {
+        
+        console.log(marker.id, marker.position)
+        return (
+          <Marker 
+            key={marker.id} 
+            position={marker.position}
+            eventHandlers={{
+              click: (e) => {
+                setActiveMarker(marker);
+                console.log('Marker clicked:', marker);
+              },
+              add: (e) => {
+                if (idx === 0) e.target.openPopup(); // conditionally open
+              },
+            }}
+          >
+            <Popup>
+              <PopupDetail data={marker}/>
+            </Popup>
+          </Marker>
+        )
+      })
+      }
       <LocationMarker />
     </MapContainer>
   )

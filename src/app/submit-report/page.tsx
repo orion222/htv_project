@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useEffect, useMemo, useRef } from 'react'
@@ -128,9 +127,12 @@ function LocationAutocomplete({
   }, [url, debounceMs, value, apiKey]);
 
   const pick = (it: { label: string; lon: number; lat: number }) => {
-    onPick(it.label, [it.lon, it.lat]); // keep your [lon, lat] shape
+    if (value === it.label) return; // Prevent redundant updates
+    onPick(it.label, [it?.lon ?? 0, it?.lat ?? 0]);
     setOpen(false);
   };
+
+  const validItems = items.filter((it) => it && it.label && it.lon != null && it.lat != null);
 
   return (
     <div className="space-y-2">
@@ -163,7 +165,7 @@ function LocationAutocomplete({
             )}
             {!loading &&
               !error &&
-              items.map((it) => (
+              validItems.map((it) => (
                 <li
                   key={it.id}
                   className="cursor-pointer rounded px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground"
@@ -267,7 +269,7 @@ export default function SubmitReportPage() {
                 setFormData((prev) => ({
                   ...prev,
                   location: label,
-                  position: [lon, lat], // ✅ this now stores [lon, lat]
+                  position: [lon ?? 0, lat ?? 0], // ✅ this now stores [lon, lat]
                 }))
               }
               required
