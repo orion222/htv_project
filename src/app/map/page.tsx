@@ -22,7 +22,7 @@ export function MapPage() {
               "ngrok-skip-browser-warning": "true",
             }
           })
-          console.log({response});
+          console.log("fetched response: ", response);
           const data = await response.json()
           setMarkers(data?.markers || [])
           setAllMarkers(data?.markers || []);
@@ -36,7 +36,7 @@ export function MapPage() {
       }
 
       fetchMarkers()
-    }, [setMarkers, setAllMarkers])
+    }, [])
 
     if (!mounted || !markers) {
       return (
