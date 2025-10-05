@@ -99,10 +99,7 @@ export default function SubmitReportPage() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
-<<<<<<< HEAD
 
-=======
->>>>>>> 798e3f11d4f0a11ab02a801174c92e364d98d2a2
             <div className="space-y-2">
               <Label htmlFor="location">Location *</Label>
               <Input
