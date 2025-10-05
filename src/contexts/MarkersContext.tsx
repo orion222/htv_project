@@ -3,6 +3,8 @@ import React, { createContext, useContext, useState, ReactNode } from 'react'
 import { MarkerData } from '../types/Marker'
 
 export interface MarkersContextType {
+  allMarkers: MarkerData[],
+  setAllMarkers: React.Dispatch<React.SetStateAction<MarkerData[]>>
   markers: MarkerData[]
   setMarkers: React.Dispatch<React.SetStateAction<MarkerData[]>>
   activeMarker: MarkerData
@@ -29,11 +31,12 @@ export function MarkersProvider({ children }: MarkersProviderProps) {
     address_id: null,
     address: {},
   }
+  const [allMarkers, setAllMarkers] = useState<MarkerData[]>([]);
   const [markers, setMarkers] = useState<MarkerData[]>([])
   const [activeMarker, setActiveMarker] = useState<MarkerData>(fakeActiveMarker)
 
   return (
-    <MarkersContext.Provider value={{ markers, setMarkers, activeMarker, setActiveMarker }}>
+    <MarkersContext.Provider value={{ allMarkers, setAllMarkers, markers, setMarkers, activeMarker, setActiveMarker }}>
       {children}
     </MarkersContext.Provider>
   )

@@ -13,11 +13,9 @@ const DynamicMap = dynamic(() => import('./Map'), {
 
 export default function MapWrapper() {
   const { markers } = useMarkers();
-  const setDefault = true
-  const center: [number, number] = [0, 0];
-  const utsc_position: [number, number] = [43.78472822909501, -79.1861080766575]
+  const default_position: [number, number] = markers[0].position
   return (
-    <DynamicMap markers={markers} center={setDefault ? utsc_position: center}/>
+    <DynamicMap markers={markers} center={default_position}/>
   )
 }
 
