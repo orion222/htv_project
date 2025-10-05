@@ -9,7 +9,7 @@ import { MarkersProvider, useMarkers } from '../../contexts/MarkersContext'
 import { BACKEND_URL } from '../../lib/constants'
 
 export function MapPage() {
-    const { markers, setMarkers, setActiveMarker, activeMarker } = useMarkers()
+    const { markers, setMarkers, setAllMarkers, setActiveMarker, activeMarker } = useMarkers()
     const [mounted, setMounted] = useState(false)
 
     useEffect(() => {
@@ -23,8 +23,8 @@ export function MapPage() {
           })
 
           const data = await response.json()
-          console.log(data);
           setMarkers(data?.markers || [])
+          setAllMarkers(data?.markers || []);
           setActiveMarker(data?.markers[0] ?? activeMarker)
         } catch (error) {
           console.error('Error fetching markers:', error)
@@ -35,7 +35,7 @@ export function MapPage() {
       }
 
       fetchMarkers()
-    }, [setMarkers])
+    }, [setMarkers, setAllMarkers])
 
     if (!mounted || !markers) {
       return (
@@ -64,8 +64,8 @@ export function MapPage() {
         <div className="max-w-7xl mx-auto px-8 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
-              <RecentActivity />
               <StatsOverview />
+              <RecentActivity />
             </div>
             <div>
               <QuickActions />

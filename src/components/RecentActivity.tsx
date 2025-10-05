@@ -7,7 +7,7 @@ export default function RecentActivity() {
   const { markers } = useMarkers();
 
   return (
-    <Card className = "mb-4">
+    <Card>
       <CardHeader>
         <CardTitle>Recent Activity</CardTitle>
       </CardHeader>
